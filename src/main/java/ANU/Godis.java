@@ -1,19 +1,41 @@
 package ANU;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
 public class Godis {
+    @Id
+//    SequenceGenerator Defines a primary key generator that may be referenced by name when a generator element is specified for the GeneratedValue
+    @SequenceGenerator(
+            name = "godis_id_sequence",
+            sequenceName = "godis_id_sequence"
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "godis_id_sequence"
+    )
+    private int id;
     private String name;
     private String type;
-    private int rating;
+    private double rating;
 
-    public Godis(String name, String type, int rating){
+    public Godis(String name, String type, double rating){
         this.name = name;
         this.type = type;
         this.rating = rating;
     }
 
     public Godis(){
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -31,7 +53,7 @@ public class Godis {
         this.type = type;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
