@@ -10,7 +10,8 @@ public class Godis {
 //    SequenceGenerator Defines a primary key generator that may be referenced by name when a generator element is specified for the GeneratedValue
     @SequenceGenerator(
             name = "godis_id_sequence",
-            sequenceName = "godis_id_sequence"
+            sequenceName = "godis_id_sequence",
+            allocationSize = 1 //changing from default of 50
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -57,7 +58,7 @@ public class Godis {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 

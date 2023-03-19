@@ -2,9 +2,7 @@ package ANU;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,22 +24,25 @@ public class Main {
 
     @GetMapping
     public List<Godis> getGodis(){
+
         return godisRepository.findAll();
     }
 
-//    @GetMapping("/greet")
-//    public greetingResponse greeting(){
-//        greetingResponse response = new greetingResponse(
-//                "Hello",
-//                List.of("Java", "JavaScript", "Python"),
-//                new Person("Caolan", 29, 400.00));
-//
-//        return response;
-//    }
-//
-//
-//    record Person(String name, int age, double moneys){ }
-//
-//    record greetingResponse(String greet, List<String> langs, Person person){ }
+    record  NewGodisRequest(String name, String type, double rating){
+    }
+
+    @PostMapping()
+    public void addGodis(@RequestBody NewGodisRequest request){
+        Godis godis = new Godis();
+        godis.setName(request.name);
+        godis.setType(request.type);
+        godis.setRating(request.rating);
+        godisRepository.save(godis);
+    }
+
+    @DeleteMapping("{godisId}")
+    public void deleteGodis(@PathVariable("godisId")Integer id){
+        godisRepository.deleteById(id);
+    }
 
 }
