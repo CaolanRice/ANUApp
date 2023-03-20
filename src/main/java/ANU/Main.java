@@ -45,4 +45,14 @@ public class Main {
         godisRepository.deleteById(id);
     }
 
+
+    @PutMapping("{godisId}")
+    public void updateGodis(@PathVariable("godisId")Integer id, @RequestBody NewGodisRequest request) throws Exception{
+        Godis godis = godisRepository.findById(id)
+                .orElseThrow(() -> new Exception("Godis id does not exist: " + id));
+        godis.setName(request.name);
+        godis.setType(request.type);
+        godis.setRating(request.rating);
+        godisRepository.save(godis);
+    }
 }
