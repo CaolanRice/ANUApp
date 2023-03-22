@@ -1,8 +1,8 @@
+HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-docker-compose.yml
 
 ### STS ###
 .apt_generated
@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### My own ###
+.env
