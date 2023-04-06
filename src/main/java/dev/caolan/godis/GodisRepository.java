@@ -14,4 +14,5 @@ public interface GodisRepository extends MongoRepository<Godis, ObjectId> {
 
     Optional<Godis> findGodisByType(String type);
 
+//    Optional<Godis> findGodisByName(String name);
 }

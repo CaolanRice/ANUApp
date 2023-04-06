@@ -25,6 +25,10 @@ public class GodisService {
         return godisRepository.findGodisByType(type);
     }
 
+//    public Optional<Godis> byName(String name){
+//        return godisRepository.findGodisByName(name);
+//    }
+
 
 
 
