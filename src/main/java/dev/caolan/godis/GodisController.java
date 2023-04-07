@@ -1,5 +1,6 @@
 package dev.caolan.godis;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +17,8 @@ import java.util.Optional;
 @RequestMapping("/api/v1/godis")
 public class GodisController {
     private final GodisService godisService;
+
+    @Autowired
     private MongoTemplate mongoTemplate;
 
     public GodisController(GodisService godisService) {
@@ -35,8 +40,11 @@ public class GodisController {
         return new ResponseEntity<>(godisService.byType(type), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/candy/{name}", method = RequestMethod.GET)
-    public List<Godis> getGodisByName(@RequestParam("name") String godisName) {
+    @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
+    public List<Godis> getGodisByName(@PathVariable("name") String encodedGodisName) {
+        // Decodes encoded name to allow for string to contain spaces
+        String godisName = URLDecoder.decode(encodedGodisName, StandardCharsets.UTF_8);
+
         Query query = new Query();
         query.addCriteria(Criteria.where("name").is(godisName));
         return mongoTemplate.find(query, Godis.class);
