@@ -1,6 +1,7 @@
 package dev.caolan.godis;
 
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,10 @@ public class GodisService {
 
     public Optional<Godis> byType(String type){
         return godisRepository.findGodisByType(type);
+    }
+
+    public void deleteBy(ObjectId id){
+        this.godisRepository.deleteById(id);
     }
 
 //    public Optional<Godis> byName(String name){

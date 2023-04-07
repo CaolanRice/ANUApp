@@ -1,5 +1,6 @@
 package dev.caolan.godis;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/godis")
 public class GodisController {
+    @Autowired
     private final GodisService godisService;
 
     @Autowired
@@ -49,6 +51,14 @@ public class GodisController {
         query.addCriteria(Criteria.where("name").is(godisName));
         return mongoTemplate.find(query, Godis.class);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteGodis(@PathVariable("id") ObjectId id) {
+        godisService.deleteBy(id);
+        return ResponseEntity.ok("Godis deleted");
+    }
+
+
 
 
 

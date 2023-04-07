@@ -21,4 +21,5 @@ public class Godis {
     private String type;
     private double rating;
     private List<String> attributes;
+
 }
