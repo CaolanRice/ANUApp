@@ -1,5 +1,6 @@
 package dev.caolan.godis;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/godis")
 public class GodisController {
+    @Autowired
     private final GodisService godisService;
 
     @Autowired
@@ -40,6 +42,7 @@ public class GodisController {
         return new ResponseEntity<>(godisService.byType(type), HttpStatus.OK);
     }
 
+
     @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
     public List<Godis> getGodisByName(@PathVariable("name") String encodedGodisName) {
         // Decodes encoded name to allow for string to contain spaces
@@ -49,6 +52,36 @@ public class GodisController {
         query.addCriteria(Criteria.where("name").is(godisName));
         return mongoTemplate.find(query, Godis.class);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteGodis(@PathVariable("id") ObjectId id) {
+        godisService.deleteBy(id);
+        return ResponseEntity.ok("Godis deleted");
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> createGodis(@RequestBody Godis godis){
+        godisService.addGodis(godis);
+        return ResponseEntity.ok("Godis added");
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateGodis(@PathVariable("id") ObjectId id, @RequestBody Godis updatedGodis) {
+        Godis godis = godisService.findById(id);
+        if (godis == null){
+            return new ResponseEntity<>("Godis not found", HttpStatus.NOT_FOUND);
+        }
+        godis.setName(updatedGodis.getName());
+        godis.setType(updatedGodis.getType());
+        godis.setRating(updatedGodis.getRating());
+        godis.setAttributes(updatedGodis.getAttributes());
+
+        godisService.saveGodis(godis);
+
+        return new ResponseEntity("Godis updated!", HttpStatus.OK);
+    }
+
+
 
 
 
