@@ -30,6 +30,18 @@ public class GodisService {
         this.godisRepository.deleteById(id);
     }
 
+    public void addGodis(Godis godis){
+        this.godisRepository.save(godis);
+    }
+
+    public Godis findById(ObjectId id) {
+        return godisRepository.findById(id).orElse(null);
+    }
+
+    public void saveGodis(Godis godis) {
+        this.godisRepository.save(godis);
+    }
+
 //    public Optional<Godis> byName(String name){
 //        return godisRepository.findGodisByName(name);
 //    }
