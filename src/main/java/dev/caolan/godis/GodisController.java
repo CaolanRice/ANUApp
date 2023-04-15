@@ -60,6 +60,12 @@ public class GodisController {
         return ResponseEntity.ok("Godis deleted");
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteAllGodis(){
+        godisService.deleteAll();
+        return ResponseEntity.ok("All godis deleted");
+    }
+
     @PostMapping("/add")
     public ResponseEntity<String> createGodis(@RequestBody Godis godis){
         godisService.addGodis(godis);
