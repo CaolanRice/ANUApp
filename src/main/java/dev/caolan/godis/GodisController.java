@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/godis")
 public class GodisController {
@@ -57,6 +58,12 @@ public class GodisController {
     public ResponseEntity<String> deleteGodis(@PathVariable("id") ObjectId id) {
         godisService.deleteBy(id);
         return ResponseEntity.ok("Godis deleted");
+    }
+
+    @DeleteMapping("/delete/all")
+    public ResponseEntity<String> deleteAllGodis(){
+        godisService.deleteAll();
+        return ResponseEntity.ok("All godis deleted");
     }
 
     @PostMapping("/add")

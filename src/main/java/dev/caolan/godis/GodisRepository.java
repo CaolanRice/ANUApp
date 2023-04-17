@@ -9,15 +9,7 @@ import java.util.Optional;
 @Repository
 public interface GodisRepository extends MongoRepository<Godis, ObjectId> {
 
-
     Optional<Godis> findGodisByRating(Double rating);
-
     Optional<Godis> findGodisByType(String type);
 
-//    void deleteById(ObjectId id);
-//
-//    void createGodis(Godis godis);
-
-
-//    Optional<Godis> findGodisByName(String name);
 }

@@ -3,6 +3,8 @@ package dev.caolan.godis;
 
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +32,10 @@ public class GodisService {
         this.godisRepository.deleteById(id);
     }
 
+    public void deleteAll(){
+        this.godisRepository.deleteAll();
+    }
+
     public void addGodis(Godis godis){
         this.godisRepository.save(godis);
     }
@@ -42,9 +48,7 @@ public class GodisService {
         this.godisRepository.save(godis);
     }
 
-//    public Optional<Godis> byName(String name){
-//        return godisRepository.findGodisByName(name);
-//    }
+
 
 
 
