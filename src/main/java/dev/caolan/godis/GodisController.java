@@ -83,13 +83,9 @@ public class GodisController {
         godis.setRating(updatedGodis.getRating());
         godis.setAttributes(updatedGodis.getAttributes());
 
-        godisService.saveGodis(godis);
+        godisService.addGodis(godis);
 
         return new ResponseEntity("Godis updated!", HttpStatus.OK);
     }
-
-
-
-
 
 }

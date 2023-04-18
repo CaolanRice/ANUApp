@@ -2,6 +2,7 @@ package dev.caolan.godis;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,16 +12,20 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,6 +36,13 @@ public class GodisControllerTest {
 
     @Mock
     private GodisService godisService;
+
+    @Mock
+    private GodisController controller;
+
+    @Mock
+    private MongoTemplate mongoTemplate;
+
 
     private MockMvc mockMvc; //spring mvc test framework for testing http request and response without starting server
 
@@ -99,5 +111,46 @@ public class GodisControllerTest {
         Assert.assertEquals(godis.getRating(), responseGodis.getRating(), 0.001); //delta = margin of error. 0.001 for precision when comparing floating point
     }
 
-}
+    @Test
+    public void testDeleteAllGodis() throws Exception {
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/godis/delete/all")) //send DELETE request to endpoint
+                .andExpect(MockMvcResultMatchers.status().isOk()) //check if http status response is 200 (OK)
+                .andReturn(); //return result of request
 
+        verify(godisService, times(1)).deleteAll(); //verify that deleteAll method is called only once
+        String response = result.getResponse().getContentAsString(); //get response contest as string
+        Assert.assertEquals("All godis deleted", response); //check if expected response content is equal to actual response content
+    }
+
+
+    @Test
+    public void testGetGodisByName() throws Exception {
+        String encodedGodisName = "godis";
+        String godisName = "godis";
+        Query query = new Query();
+        query.addCriteria(Criteria.where("name").is(godisName));
+        List<Godis> expectedGodisList = mongoTemplate.find(query, Godis.class);
+
+        List<Godis> actualGodisList = controller.getGodisByName(encodedGodisName);
+
+        assertEquals(expectedGodisList, actualGodisList);
+    }
+
+
+    @Test
+    public void testCreateGodis() throws Exception {
+        Godis godis = new Godis(null, "Test Godis", "Test Type", 4.5, null);
+
+        //mock godisService object
+        GodisService godisService = Mockito.mock(GodisService.class);
+        //Create instance of godisController class with mocked object
+        GodisController godisController = new GodisController(godisService);
+
+        // call method to be tested
+        godisController.createGodis(godis);
+
+        // verify that addGodis is invoked with expected args
+        verify(godisService).addGodis(godis);
+    }
+
+}
