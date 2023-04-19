@@ -125,8 +125,8 @@ public class GodisControllerTest {
 
     @Test
     public void testGetGodisByName() throws Exception {
-        String encodedGodisName = "godis";
-        String godisName = "godis";
+        String encodedGodisName = "Test%20godis";
+        String godisName = "Test godis";
         Query query = new Query();
         query.addCriteria(Criteria.where("name").is(godisName));
         List<Godis> expectedGodisList = mongoTemplate.find(query, Godis.class);
