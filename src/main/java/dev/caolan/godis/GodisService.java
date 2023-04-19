@@ -44,13 +44,5 @@ public class GodisService {
         return godisRepository.findById(id).orElse(null);
     }
 
-    public void saveGodis(Godis godis) {
-        this.godisRepository.save(godis);
-    }
-
-
-
-
-
 
 }

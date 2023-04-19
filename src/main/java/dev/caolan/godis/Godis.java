@@ -22,6 +22,12 @@ public class Godis {
     private double rating;
     private List<String> attributes;
 
+    public Godis(String name, String type, double rating) {
+        this.name = name;
+        this.type = type;
+        this.rating = rating;
+    }
+
     public ObjectId getId() {
         return id;
     }
