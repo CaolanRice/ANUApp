@@ -14,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -152,5 +154,17 @@ public class GodisControllerTest {
         // verify that addGodis is invoked with expected args
         verify(godisService).addGodis(godis);
     }
+
+    @Test
+    public void testGetGodisById() {
+        ObjectId id = new ObjectId();
+        Godis godis = new Godis(id, "Fizzy pigtails", "Sweet", 4.5, Arrays.asList("Sour", "Fizzy"));
+        when(godisService.getBy(id)).thenReturn(Optional.of(godis));
+        ResponseEntity<Godis> response = godisController.getGodisById(id);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(godis, response.getBody());
+    }
+
+
 
 }

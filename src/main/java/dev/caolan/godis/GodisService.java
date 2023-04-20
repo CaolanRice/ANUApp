@@ -28,6 +28,10 @@ public class GodisService {
         return godisRepository.findGodisByType(type);
     }
 
+    public Optional<Godis> getBy(ObjectId id){
+        return godisRepository.findGodisById(id);
+    }
+
     public void deleteBy(ObjectId id){
         this.godisRepository.deleteById(id);
     }

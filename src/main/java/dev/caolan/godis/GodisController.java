@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -20,6 +22,8 @@ import java.util.Optional;
 public class GodisController {
     @Autowired
     private final GodisService godisService;
+
+    private final Logger logger = LoggerFactory.getLogger(GodisController.class);
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -58,6 +62,17 @@ public class GodisController {
     public ResponseEntity<String> deleteGodis(@PathVariable("id") ObjectId id) {
         godisService.deleteBy(id);
         return ResponseEntity.ok("Godis deleted");
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Godis> getGodisById(@PathVariable("id") ObjectId id) {
+        logger.info("Received request to get godis with id: {}", id);
+        Optional<Godis> godis = godisService.getBy(id);
+        if (godis.isPresent()) {
+            return ResponseEntity.ok(godis.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/delete/all")
