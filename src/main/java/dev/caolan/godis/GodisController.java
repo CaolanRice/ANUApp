@@ -87,7 +87,7 @@ public class GodisController {
         return ResponseEntity.ok("Godis added");
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateGodis(@PathVariable("id") ObjectId id, @RequestBody Godis updatedGodis) {
         Godis godis = godisService.findById(id);
         if (godis == null){
