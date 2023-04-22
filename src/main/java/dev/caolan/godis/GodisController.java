@@ -54,7 +54,7 @@ public class GodisController {
         String godisName = URLDecoder.decode(encodedGodisName, StandardCharsets.UTF_8);
 
         Query query = new Query();
-        query.addCriteria(Criteria.where("name").is(godisName));
+        query.addCriteria(Criteria.where("name").regex(godisName, "i")); //making query case insensitive
         return mongoTemplate.find(query, Godis.class);
     }
 
