@@ -24,7 +24,7 @@ public class GodisService {
         return godisRepository.findGodisByRating(rating);
     }
 
-    public Optional<Godis> byType(String type){
+    public List<Godis> byType(String type) {
         return godisRepository.findGodisByType(type);
     }
 

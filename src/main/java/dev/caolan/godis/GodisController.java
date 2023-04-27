@@ -43,8 +43,12 @@ public class GodisController {
     }
 
     @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
-    public ResponseEntity<Optional<Godis>> getGodisByType(@PathVariable String type){
-        return new ResponseEntity<>(godisService.byType(type), HttpStatus.OK);
+    public ResponseEntity<List<Godis>> getGodisByType(@PathVariable String type){
+        List<Godis> godisList = godisService.byType(type);
+        if (godisList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(godisList, HttpStatus.OK);
     }
 
 
