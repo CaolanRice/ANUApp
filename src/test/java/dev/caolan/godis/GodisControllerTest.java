@@ -99,18 +99,18 @@ public class GodisControllerTest {
     public void testGetGodisByType() throws Exception {
         String type = "Type1";
         Godis godis = new Godis("Godis1", "Type1", 4.5);
-        Optional<Godis> optionalGodis = Optional.of(godis);
+        List<Godis> listOfGodis = List.of(godis);
 
-        Mockito.when(godisService.byType(type)).thenReturn(optionalGodis);
+        Mockito.when(godisService.byType(type)).thenReturn(listOfGodis);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/godis/type/{type}", type))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
         String response = result.getResponse().getContentAsString();
-        Godis responseGodis = new ObjectMapper().readValue(response, Godis.class);
-        Assert.assertEquals(godis.getName(), responseGodis.getName());
-        Assert.assertEquals(godis.getRating(), responseGodis.getRating(), 0.001); //delta = margin of error. 0.001 for precision when comparing floating point
+        Godis[] responseGodis = new ObjectMapper().readValue(response, Godis[].class);
+        Assert.assertEquals(godis.getName(), responseGodis[0].getName());
+        Assert.assertEquals(godis.getRating(), responseGodis[0].getRating(), 0.001); //delta = margin of error. 0.001 for precision when comparing floating point
     }
 
     @Test
