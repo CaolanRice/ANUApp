@@ -16,6 +16,7 @@ jobs:
         uses: supercharge/mongodb-github-action@1.8.0
         with:
           mongodb-uri: ${{ secrets.MONGO_URI }}
+          distribution: 'ubuntu1804'
       - name: Build and test
         run: |
           ./mvnw clean verify
