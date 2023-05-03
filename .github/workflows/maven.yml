@@ -12,11 +12,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 17
+      - name: Set up JDK 17 and Maven
         uses: actions/setup-java@v2
         with:
-          java-version: 17
+          java-version: 17.0.7
           distribution: adopt
+          maven-version: '3.9.1'
       - name: Print Java and Maven versions
         run: |
           echo "Java version: ${{ env.JAVA_HOME }}"
