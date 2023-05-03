@@ -21,7 +21,7 @@ jobs:
         uses: supercharge/mongodb-github-action@1.8.0
         with:
           mongodb-uri: ${{ secrets.MONGO_URI }}
-          distribution: 'windows-latest'
+          mongodb-version: latest
       - name: Build with Maven
         run: mvn -B package --file pom.xml
       - name: Test with Maven
