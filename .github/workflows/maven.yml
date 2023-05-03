@@ -17,6 +17,10 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
+      - name: Print Java and Maven versions
+        run: |
+          echo "Java version: ${{ env.JAVA_HOME }}"
+          mvn --version
       - name: Set up MongoDB
         uses: supercharge/mongodb-github-action@1.8.0
         with:
@@ -28,7 +32,3 @@ jobs:
         run: mvn test --file pom.xml -Dtest=GodisControllerTest
         env:
           MONGODB_URI: ${{ secrets.MONGO_URI }}
-      - name: Print Java and Maven versions
-        run: |
-          echo "Java version: ${{ env.JAVA_HOME }}"
-          mvn --version
