@@ -13,7 +13,7 @@ jobs:
         with:
           java-version: '17'
       - name: Set up MongoDB
-        uses: supercharge/mongodb-github-action@latest
+        uses: supercharge/mongodb-github-action@1.8.0
         with:
           mongodb-uri: ${{ secrets.MONGO_URI }}
       - name: Build and test
