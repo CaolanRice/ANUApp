@@ -28,3 +28,7 @@ jobs:
         run: mvn test --file pom.xml -Dtest=GodisControllerTest
         env:
           MONGODB_URI: ${{ secrets.MONGO_URI }}
+      - name: Print Java and Maven versions
+        run: |
+          echo "Java version: ${{ env.JAVA_HOME }}"
+          mvn --version

@@ -34,3 +34,4 @@ build/
 
 ### My own ###
 .env
+.github/workflows/mongoTest.yml
