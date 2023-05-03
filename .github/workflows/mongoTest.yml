@@ -1,0 +1,21 @@
+name: Test MongoDB URI Secret
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+      - name: Set up MongoDB
+        uses: supercharge/mongodb-github-action@v1.1.0
+        with:
+          mongodb-uri: ${{ secrets.MONGO_URI }}
+      - name: Build and test
+        run: |
+          ./mvnw clean verify
