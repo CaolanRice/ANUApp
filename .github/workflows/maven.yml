@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -16,18 +16,15 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: 17
+          distribution: adopt
       - name: Set up MongoDB
         uses: supercharge/mongodb-github-action@1.8.0
         with:
           mongodb-uri: ${{ secrets.MONGO_URI }}
-          distribution: 'ubuntu1804'
+          distribution: 'windows-latest'
       - name: Build with Maven
         run: mvn -B package --file pom.xml
       - name: Test with Maven
-        run: mvn test --file pom.xml
+        run: mvn test --file pom.xml -Dtest=GodisControllerTest
         env:
           MONGODB_URI: ${{ secrets.MONGO_URI }}
-      - name: Run GodisControllerTest
-        run: mvn -Dtest=GodisControllerTest test --file pom.xml
-        env:
-            MONGODB_URI: ${{ secrets.MONGO_URI }}
