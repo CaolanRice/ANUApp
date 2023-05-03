@@ -44,6 +44,6 @@ jobs:
           MONGODB_URI: ${{ secrets.MONGO_URI }}
 
       - name: Test with Maven
-        run: mvn test --file pom.xml -Dtest=GodisControllerTest
+        run: mvn test --file pom.xml
         env:
           MONGODB_URI: ${{ secrets.MONGO_URI }}

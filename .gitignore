@@ -35,3 +35,4 @@ build/
 ### My own ###
 .env
 .github/workflows/mongoTest.yml
+src/test/java/dev/caolan/test/oldTestCases.java
