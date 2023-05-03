@@ -44,6 +44,7 @@ public class GodisController {
 
     @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
     public ResponseEntity<List<Godis>> getGodisByType(@PathVariable String type){
+        //return a list to allow for returning non unique vals
         List<Godis> godisList = godisService.byType(type);
         if (godisList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
